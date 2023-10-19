@@ -1,0 +1,26 @@
+name: 'Download artifacts'
+description: 'Azure Blob download artifacts and decompress'
+
+inputs:
+  connection_string:
+    description: 'Azure atorage connection string'
+    required: true
+  name:
+    description: 'Artifact name'
+    required: true
+  path:
+    description: 'Artifact path'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: fixpoint/azblob-download-artifact@v3
+      with:
+        connection-string: ${{ inputs.connection_string }}
+        name: ${{ inputs.name }}-${{ github.sha }}-${{ github.run_id }}
+        path: .
+    - run: tar -xzvf ${{ inputs.name }}.tar.gz ${{ inputs.path }}
+      shell: bash
+    - run: rm ${{ inputs.name }}.tar.gz
+      shell: bash
