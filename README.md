@@ -8,3 +8,5 @@ Hyperskill GitHub Action | Azure blob download artifact
     name: frontend-dist
     path: dist
 ```
+
+For uploading, use https://github.com/marketplace/actions/azure-blob-upload-artifacts
